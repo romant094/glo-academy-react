@@ -11,6 +11,11 @@ const AppBlock = styled.div`
   max-width: 800px;
 `;
 
+const FilterWrapper = styled.div`
+    display: flex;
+    margin: 1rem 0;
+`;
+
 const App = () => {
     const list = [
         {id: 1, label: 'Tea', important: true},

@@ -1,7 +1,16 @@
 import React from 'react';
 import PostListItem from "../post-list-item";
-import './post-list.css';
+import styled from 'styled-components';
 import ListGroup from "reactstrap/es/ListGroup";
+
+const CustomListGroup = styled(ListGroup)`
+    margin-top: 50px;
+
+    .list-group-item {
+        padding: 20px 35px 10px 35px;
+        margin-top: 10px;
+    }
+`;
 
 const PostList = ({list}) => {
     const elements = list.map((item) => {
@@ -14,9 +23,9 @@ const PostList = ({list}) => {
     //     <PostListItem label={label} important={important}/>
     // ));
     return (
-        <ListGroup className={'app-list list-group'}>
+        <CustomListGroup>
             {elements}
-        </ListGroup>
+        </CustomListGroup>
     )
 };
 
