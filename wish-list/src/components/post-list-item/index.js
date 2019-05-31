@@ -19,9 +19,13 @@ const date = () => {
 
 export default class PostListItem extends Component {
 
+    input = React.createRef();
+
     state = {
+        label: this.props.label,
         important: false,
-        like: false
+        like: false,
+        editable: false
     };
 
     onImportant = () => {
@@ -36,9 +40,23 @@ export default class PostListItem extends Component {
         }))
     };
 
+    editToggle = () => {
+        this.input.current.value = this.state.label;
+        this.setState(state => ({
+            editable: !state.editable
+        }))
+    };
+
+    onSave = (e) => {
+        e.preventDefault();
+        this.setState((state) => ({
+            label: this.input.current.value,
+            editable: !state.editable
+        }))
+    };
+
     render() {
-        const {label} = this.props;
-        const {important, like} = this.state;
+        const {important, like, label, editable} = this.state;
 
         let classNames = 'app-list-item d-flex justify-content-between';
 
@@ -50,10 +68,20 @@ export default class PostListItem extends Component {
         }
         return (
             <li className={classNames}>
-                <span className={'app-list-item-label'}
+                <span className={`${editable ? 'd-none' : ''} app-list-item-label`}
                       onClick={this.onLike}>
                     {label}
                 </span>
+                <form className={`${editable ? 'd-flex' : 'd-none'} align-items-center`}
+                      onSubmit={this.onSave}>
+                    <input type="text" className={'app-list-item-edit'} ref={this.input}/>
+                    <button type={'submit'} className={'btn btn-icon'}>
+                        <i className="fa fa-check text-success"></i>
+                    </button>
+                    <button type={'button'} className={'btn btn-icon'} onClick={this.editToggle}>
+                        <i className="fa fa-ban text-danger"></i>
+                    </button>
+                </form>
                 <div className="d-flex justify-content-center align-items-center">
                     <span className={'app-list-item-date'}>{date()}</span>
                     <button
@@ -66,6 +94,12 @@ export default class PostListItem extends Component {
                         type={'button'}
                         className={'btn-trash btn-sm'}>
                         <i className="fa fa-trash-o"></i>
+                    </button>
+                    <button
+                        type={'button'}
+                        className={'btn-edit btn-sm'}
+                        onClick={this.editToggle}>
+                        <i className="fa fa-pencil"></i>
                     </button>
                     <i className="fa fa-heart"></i>
                 </div>
