@@ -2,6 +2,7 @@ import React from 'react';
 import PostListItem from "../post-list-item";
 import styled from 'styled-components';
 import ListGroup from "reactstrap/es/ListGroup";
+import idGenerator from 'react-id-generator';
 
 const CustomListGroup = styled(ListGroup)`
     margin-top: 50px;
@@ -14,9 +15,9 @@ const CustomListGroup = styled(ListGroup)`
 
 const PostList = ({list}) => {
     const elements = list.map((item) => {
-        const {id} = item;
+        const idGen = idGenerator();
         return (
-            <PostListItem {...item} key={id}/>
+            <PostListItem {...item} key={idGen}/>
         );
     });
     // const elements = list.map(({id, name, important}) => (
