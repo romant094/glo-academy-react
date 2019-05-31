@@ -1,6 +1,7 @@
 import React from 'react';
 import PostListItem from "../post-list-item";
 import './post-list.css';
+import ListGroup from "reactstrap/es/ListGroup";
 
 const PostList = ({list}) => {
     const elements = list.map((item) => {
@@ -13,9 +14,9 @@ const PostList = ({list}) => {
     //     <PostListItem label={label} important={important}/>
     // ));
     return (
-        <ul className={'app-list list-group'}>
+        <ListGroup className={'app-list list-group'}>
             {elements}
-        </ul>
+        </ListGroup>
     )
 };
 
