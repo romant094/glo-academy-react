@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Button, Form, Input} from "reactstrap";
 import styled from 'styled-components';
 
-const CustomForm = styled.div`
+const CustomForm = styled(Form)`
     display:flex;
     margin-top: 20px;
 `;
@@ -12,17 +12,31 @@ const CustomInput = styled(Input)`
     margin-right: 3px;
 `;
 
+export default class PostAddForm extends Component {
+    state = {
+        text: ''
+    };
 
-const PostAddForm = ({onAdd}) => {
-    return (
-        <CustomForm>
-            <CustomInput type="text"
-                         placeholder={'О чем вы думаете сейчас?'}/>
-            <Button type={'submit'}
-                    color={'primary'}
-                    onClick={()=>onAdd('hello')}>Добавить</Button>
-        </CustomForm>
-    )
-};
+    onValueChange = (e) => {
+        this.setState({text: e.target.value})
+    };
 
-export default PostAddForm;
+    onSubmit = (e) => {
+        e.preventDefault();
+        this.props.onAdd(this.state.text);
+        this.setState({text: ''})
+    };
+
+    render() {
+        return (
+            <CustomForm onSubmit={this.onSubmit}>
+                <CustomInput type="text"
+                             placeholder={'О чем вы думаете сейчас?'}
+                             onChange={this.onValueChange}
+                             value={this.state.text}/>
+                <Button type={'submit'}
+                        color={'primary'}>Добавить</Button>
+            </CustomForm>
+        )
+    }
+}
