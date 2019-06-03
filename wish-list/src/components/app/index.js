@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Header from "../header";
 import SearchPanel from "../search-panel";
 import PostStatusFilter from "../post-status-filter";
 import PostList from "../post-list";
 import PostAddForm from "../post-add-form";
 import styled from 'styled-components';
+import idGenerator from 'react-id-generator';
 
 const AppBlock = styled.div`
   margin: 0 auto;
@@ -16,23 +17,46 @@ const FilterWrapper = styled.div`
     margin: 1rem 0;
 `;
 
-const App = () => {
-    const list = [
-        {id: 1, label: 'Tea', important: true},
-        {id: 2, label: 'Coffee', important: true},
-        {id: 3, label: 'Lemonade', important: false}
-    ];
-    return (
-        <AppBlock>
-            <Header/>
-            <div className="search-panel d-flex">
-                <SearchPanel/>
-                <PostStatusFilter/>
-            </div>
-            <PostList list={list}/>
-            <PostAddForm/>
-        </AppBlock>
-    )
-};
+const data = [
+    {label: 'Tea', important: true},
+    {label: 'Coffee', important: true},
+    {label: 'Lemonade', important: false}
+];
 
-export default App;
+data.forEach(item => item.id = idGenerator());
+
+export default class App extends Component {
+    state = {
+        list: data
+    };
+
+    deleteItem = (id) => {
+        console.log(id);
+        this.setState(({list}) => {
+            const index = list.findIndex(elem => elem.id === id);
+
+            const newArr = [...list.slice(0, index), ...list.slice(index + 1)];
+
+            return {list: newArr}
+        });
+    };
+
+    render() {
+        const {list} = this.state;
+        console.log(list);
+
+        return (
+            <AppBlock>
+                <Header/>
+                <FilterWrapper>
+                    <SearchPanel/>
+                    <PostStatusFilter/>
+                </FilterWrapper>
+                <PostList
+                    list={list}
+                    onDelete={this.deleteItem}/>
+                <PostAddForm/>
+            </AppBlock>
+        )
+    }
+};

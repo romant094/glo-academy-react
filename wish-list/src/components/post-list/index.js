@@ -2,7 +2,6 @@ import React from 'react';
 import PostListItem from "../post-list-item";
 import styled from 'styled-components';
 import ListGroup from "reactstrap/es/ListGroup";
-import idGenerator from 'react-id-generator';
 
 const CustomListGroup = styled(ListGroup)`
     margin-top: 50px;
@@ -13,11 +12,11 @@ const CustomListGroup = styled(ListGroup)`
     }
 `;
 
-const PostList = ({list}) => {
+const PostList = ({list, onDelete}) => {
     const elements = list.map((item) => {
-        const idGen = idGenerator();
+        const {id} = item;
         return (
-            <PostListItem {...item} key={idGen}/>
+            <PostListItem {...item} key={id} onDelete={() => onDelete(item.id)}/>
         );
     });
     // const elements = list.map(({id, name, important}) => (
