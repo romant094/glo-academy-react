@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Header from "../header";
 import SearchPanel from "../search-panel";
 import PostStatusFilter from "../post-status-filter";
@@ -58,3 +58,5 @@ export default class App extends Component {
         )
     }
 };
+
+export default App;
