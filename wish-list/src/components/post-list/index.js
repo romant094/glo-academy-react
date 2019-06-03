@@ -12,19 +12,17 @@ const CustomListGroup = styled(ListGroup)`
     }
 `;
 
-const PostList = ({list, onDelete, onToggleImportant, onToggleLiked}) => {
+const PostList = ({list, onDelete, onTogglePostProp}) => {
     const elements = list.map((item) => {
         const {id} = item;
         return (
             <PostListItem {...item} key={id}
                           onDelete={() => onDelete(item.id)}
-                          onToggleImportant={() => onToggleImportant(id)}
-                          onToggleLiked={() => onToggleLiked(id)}/>
+                          onToggleImportant={() => onTogglePostProp(id, 'important')}
+                          onToggleLiked={() => onTogglePostProp(id, 'like')}/>
         );
     });
-    // const elements = list.map(({id, name, important}) => (
-    //     <PostListItem label={label} important={important}/>
-    // ));
+
     return (
         <CustomListGroup>
             {elements}

@@ -50,29 +50,20 @@ export default class App extends Component {
             like: false
         };
 
-        this.setState(({list}) => {
-            const newArr = [...list, item];
-            return {list: newArr}
-        })
+        if (item.label) {
+            this.setState(({list}) => {
+                const newArr = [...list, item];
+                return {list: newArr}
+            })
+        }
     };
 
-    onToggleImportant = (id) => {
+    onTogglePostProp = (id, prop) => {
         this.setState(({list}) => {
             const index = list.findIndex(item => item.id === id);
             const old = list[index];
-            const newItem = {...old, important: !old.important};
-            const newArr = [...list.slice(0, index), newItem, ...list.slice(index + 1)];
-            return {
-                list: newArr
-            }
-        });
-    };
-
-    onToggleLiked = (id) => {
-        this.setState(({list}) => {
-            const index = list.findIndex(item => item.id === id);
-            const old = list[index];
-            const newItem = {...old, like: !old.like};
+            const newItem = {...old};
+            newItem[prop] = !old[prop];
             const newArr = [...list.slice(0, index), newItem, ...list.slice(index + 1)];
             return {
                 list: newArr
@@ -125,8 +116,7 @@ export default class App extends Component {
                 <PostList
                     list={visiblePosts}
                     onDelete={this.deleteItem}
-                    onToggleImportant={this.onToggleImportant}
-                    onToggleLiked={this.onToggleLiked}/>
+                    onTogglePostProp={this.onTogglePostProp}/>
                 <PostAddForm onAdd={this.addItem}/>
             </AppBlock>
         )
