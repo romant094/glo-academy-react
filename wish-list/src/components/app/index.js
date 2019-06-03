@@ -29,7 +29,7 @@ export default class App extends Component {
     state = {
         list: data,
         term: '',
-        filter: ''
+        filter: 'all'
     };
 
     deleteItem = (id) => {
@@ -94,20 +94,33 @@ export default class App extends Component {
         this.setState({term})
     };
 
+    filterPosts = (items, filter) => {
+        if (filter === 'like') {
+            return items.filter(item => item.like);
+        } else {
+            return items;
+        }
+    };
+
+    onFilterSelect = (filter) => {
+        this.setState({filter})
+    };
+
     render() {
-        const {list, term} = this.state;
+        const {list, term, filter} = this.state;
 
         const liked = list.filter(item => item.like).length;
         const allPosts = list.length;
 
-        const visiblePosts = this.searchPost(list, term);
+        const visiblePosts = this.filterPosts(this.searchPost(list, term), filter);
 
         return (
             <AppBlock>
                 <Header allPosts={allPosts} liked={liked}/>
                 <FilterWrapper>
                     <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
-                    <PostStatusFilter/>
+                    <PostStatusFilter filter={filter}
+                                      onFilterSelect={this.onFilterSelect}/>
                 </FilterWrapper>
                 <PostList
                     list={visiblePosts}
