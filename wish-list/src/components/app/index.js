@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Header from "../header";
 import SearchPanel from "../search-panel";
 import PostStatusFilter from "../post-status-filter";
@@ -40,6 +40,19 @@ export default class App extends Component {
         });
     };
 
+    addItem = (text) => {
+        const item = {
+            id: idGenerator(),
+            label: text,
+            important: false
+        };
+
+        this.setState(({list}) => {
+            const newArr = [...list, item];
+            return {list: newArr}
+        })
+    };
+
     render() {
         const {list} = this.state;
 
@@ -53,10 +66,8 @@ export default class App extends Component {
                 <PostList
                     list={list}
                     onDelete={this.deleteItem}/>
-                <PostAddForm/>
+                <PostAddForm onAdd={this.addItem}/>
             </AppBlock>
         )
     }
 };
-
-export default App;
