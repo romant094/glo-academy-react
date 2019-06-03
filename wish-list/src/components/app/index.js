@@ -27,7 +27,9 @@ data.forEach(item => item.id = idGenerator());
 
 export default class App extends Component {
     state = {
-        list: data
+        list: data,
+        term: '',
+        filter: ''
     };
 
     deleteItem = (id) => {
@@ -78,21 +80,37 @@ export default class App extends Component {
         });
     };
 
+    searchPost = (items, term) => {
+        if (term.length === 0) {
+            return items;
+        }
+
+        return items.filter(item => {
+            return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+        })
+    };
+
+    onUpdateSearch = (term) => {
+        this.setState({term})
+    };
+
     render() {
-        const {list} = this.state;
+        const {list, term} = this.state;
 
         const liked = list.filter(item => item.like).length;
         const allPosts = list.length;
+
+        const visiblePosts = this.searchPost(list, term);
 
         return (
             <AppBlock>
                 <Header allPosts={allPosts} liked={liked}/>
                 <FilterWrapper>
-                    <SearchPanel/>
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
                     <PostStatusFilter/>
                 </FilterWrapper>
                 <PostList
-                    list={list}
+                    list={visiblePosts}
                     onDelete={this.deleteItem}
                     onToggleImportant={this.onToggleImportant}
                     onToggleLiked={this.onToggleLiked}/>

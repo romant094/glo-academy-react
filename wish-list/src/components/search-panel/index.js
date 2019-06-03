@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
 import Input from "reactstrap/es/Input";
 
@@ -8,10 +8,17 @@ const CustomInput = styled(Input)`
     margin-right: 3px;
 `;
 
-const SearchPanel = () => {
-    return <CustomInput type="text"
-                  className={'form-control'}
-                  placeholder={'Поиск по записям'}/>
-};
+export default class SearchPanel extends Component {
+    onUpdateSearch = (e) => {
+        const term = e.target.value;
+        this.setState({term});
+        this.props.onUpdateSearch(term);
+    };
 
-export default SearchPanel;
+    render() {
+        return <CustomInput type="text"
+                            className={'form-control'}
+                            placeholder={'Поиск по записям'}
+                            onChange={this.onUpdateSearch}/>
+    }
+};
