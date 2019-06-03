@@ -19,11 +19,11 @@ const HeaderBlock = styled.div`
     }
 `;
 
-const Header = () => {
+const Header = ({liked, allPosts}) => {
     return (
         <HeaderBlock>
             <h1>Anton Romankov</h1>
-            <h2>5 записей, понравилось 0</h2>
+            <h2>{allPosts} записей, понравилось {liked}</h2>
         </HeaderBlock>
     )
 };

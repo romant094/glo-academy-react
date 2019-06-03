@@ -18,9 +18,9 @@ const FilterWrapper = styled.div`
 `;
 
 const data = [
-    {label: 'Tea', important: true},
-    {label: 'Coffee', important: true},
-    {label: 'Lemonade', important: false}
+    {label: 'Tea', important: true, like: false},
+    {label: 'Coffee', important: true, like: false},
+    {label: 'Lemonade', important: false, like: false}
 ];
 
 data.forEach(item => item.id = idGenerator());
@@ -44,7 +44,8 @@ export default class App extends Component {
         const item = {
             id: idGenerator(),
             label: text,
-            important: false
+            important: false,
+            like: false
         };
 
         this.setState(({list}) => {
@@ -53,19 +54,48 @@ export default class App extends Component {
         })
     };
 
+    onToggleImportant = (id) => {
+        this.setState(({list}) => {
+            const index = list.findIndex(item => item.id === id);
+            const old = list[index];
+            const newItem = {...old, important: !old.important};
+            const newArr = [...list.slice(0, index), newItem, ...list.slice(index + 1)];
+            return {
+                list: newArr
+            }
+        });
+    };
+
+    onToggleLiked = (id) => {
+        this.setState(({list}) => {
+            const index = list.findIndex(item => item.id === id);
+            const old = list[index];
+            const newItem = {...old, like: !old.like};
+            const newArr = [...list.slice(0, index), newItem, ...list.slice(index + 1)];
+            return {
+                list: newArr
+            }
+        });
+    };
+
     render() {
         const {list} = this.state;
 
+        const liked = list.filter(item => item.like).length;
+        const allPosts = list.length;
+
         return (
             <AppBlock>
-                <Header/>
+                <Header allPosts={allPosts} liked={liked}/>
                 <FilterWrapper>
                     <SearchPanel/>
                     <PostStatusFilter/>
                 </FilterWrapper>
                 <PostList
                     list={list}
-                    onDelete={this.deleteItem}/>
+                    onDelete={this.deleteItem}
+                    onToggleImportant={this.onToggleImportant}
+                    onToggleLiked={this.onToggleLiked}/>
                 <PostAddForm onAdd={this.addItem}/>
             </AppBlock>
         )

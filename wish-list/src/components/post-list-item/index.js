@@ -23,21 +23,7 @@ export default class PostListItem extends Component {
 
     state = {
         label: this.props.label,
-        important: false,
-        like: false,
         editable: false
-    };
-
-    onImportant = () => {
-        this.setState(state => ({
-            important: !state.important
-        }))
-    };
-
-    onLike = () => {
-        this.setState(state => ({
-            like: !state.like
-        }))
     };
 
     editToggle = () => {
@@ -56,8 +42,8 @@ export default class PostListItem extends Component {
     };
 
     render() {
-        const {important, like, label, editable} = this.state;
-        const {onDelete} = this.props;
+        const {label, editable} = this.state;
+        const {onDelete, like, important, onToggleLiked, onToggleImportant} = this.props;
 
         let classNames = 'app-list-item d-flex justify-content-between';
 
@@ -70,7 +56,7 @@ export default class PostListItem extends Component {
         return (
             <li className={classNames}>
                 <span className={`${editable ? 'd-none' : ''} app-list-item-label`}
-                      onClick={this.onLike}>
+                      onClick={onToggleLiked}>
                     {label}
                 </span>
                 <form className={`${editable ? 'd-flex' : 'd-none'} align-items-center`}
@@ -88,13 +74,13 @@ export default class PostListItem extends Component {
                     <button
                         type={'button'}
                         className={'btn-star btn-sm'}
-                        onClick={this.onImportant}>
+                        onClick={onToggleImportant}>
                         <i className="fa fa-star"></i>
                     </button>
                     <button
                         type={'button'}
                         className={'btn-trash btn-sm'}
-                    onClick={onDelete}>
+                        onClick={onDelete}>
                         <i className="fa fa-trash-o"></i>
                     </button>
                     <button

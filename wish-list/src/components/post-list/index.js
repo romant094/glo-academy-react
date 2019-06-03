@@ -12,11 +12,14 @@ const CustomListGroup = styled(ListGroup)`
     }
 `;
 
-const PostList = ({list, onDelete}) => {
+const PostList = ({list, onDelete, onToggleImportant, onToggleLiked}) => {
     const elements = list.map((item) => {
         const {id} = item;
         return (
-            <PostListItem {...item} key={id} onDelete={() => onDelete(item.id)}/>
+            <PostListItem {...item} key={id}
+                          onDelete={() => onDelete(item.id)}
+                          onToggleImportant={() => onToggleImportant(id)}
+                          onToggleLiked={() => onToggleLiked(id)}/>
         );
     });
     // const elements = list.map(({id, name, important}) => (
