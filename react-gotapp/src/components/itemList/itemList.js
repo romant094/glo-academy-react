@@ -1,20 +1,31 @@
 import React, {Component} from 'react';
-import './itemList.css';
+import {ListGroup, ListGroupItem} from 'reactstrap';
+import styled from 'styled-components';
+
+const Item = styled(ListGroupItem)`
+    cursor: pointer;
+    
+    &:hover{
+        background-color: #eee;
+        font-weight: bold;
+    }
+`;
+
 export default class ItemList extends Component {
 
     render() {
         return (
-            <ul className="item-list list-group">
-                <li className="list-group-item">
+            <ListGroup>
+                <Item>
                     John Snow
-                </li>
-                <li className="list-group-item">
+                </Item>
+                <Item>
                     Brandon Stark
-                </li>
-                <li className="list-group-item">
+                </Item>
+                <Item>
                     Geremy
-                </li>
-            </ul>
+                </Item>
+            </ListGroup>
         );
     }
 }
