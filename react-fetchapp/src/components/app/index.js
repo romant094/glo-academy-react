@@ -1,8 +1,10 @@
 import React from 'react';
+import Output from '../output';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
     return (
-        <h1>Hello world!</h1>
+        <Output/>
     )
 };
 
