@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
+import GotService from "../../service";
+import Spinner from "../spinner";
+import ErrorBoundry from "../errorBoundry";
 
 const Wrapper = styled.div`
     background-color: #fff;
@@ -24,31 +27,89 @@ const Term = styled.span`
 
 
 export default class RandomChar extends Component {
+    constructor(props) {
+        super(props);
+        this.updateChar();
+    }
+
+
+    gotService = new GotService();
+
+    state = {
+        char: {},
+        loading: true,
+        error: false
+    };
+
+    onCharLoaded = (char) => {
+        this.setState({
+            char,
+            loading: false
+        })
+    };
+
+    onError = () => {
+        this.setState({
+            error: true,
+            loading: false
+        })
+    };
+
+    updateChar = () => {
+        const id = Math.floor(Math.random() * 140 + 25);
+        this.gotService.getCharacter(111111111111111)
+            .then(this.onCharLoaded)
+            .catch(this.onError)
+    };
 
     render() {
+        const {char, loading, error} = this.state;
+
+
+        const err = error ? <ErrorBoundry/> : null;
+        const load = loading ? <Spinner/> : null;
+        const content = !(error || loading) ? <View char={char}/> : null;
+
+
+        // const content = loading
+        //     ? <Spinner/>
+        //     : error
+        //         ? <ErrorBoundry/>
+        //         : <View char={char}/>;
 
         return (
             <Wrapper className="rounded">
-                <h4>Random Character: John</h4>
-                <ListGroup className="list-group-flush">
-                    <Item>
-                        <Term>Gender </Term>
-                        <span>male</span>
-                    </Item>
-                    <Item>
-                        <Term>Born </Term>
-                        <span>11.03.1039</span>
-                    </Item>
-                    <Item>
-                        <Term>Died </Term>
-                        <span>13.09.1089</span>
-                    </Item>
-                    <Item>
-                        <Term>Culture </Term>
-                        <span>Anarchy</span>
-                    </Item>
-                </ListGroup>
+                {err}
+                {load}
+                {content}
             </Wrapper>
         );
     }
 }
+
+const View = ({char}) => {
+    const {name, gender, born, died, culture} = char;
+    return (
+        <>
+            <h4>Random Character: {name}</h4>
+            <ListGroup className="list-group-flush">
+                <Item>
+                    <Term>Gender </Term>
+                    <span>{gender}</span>
+                </Item>
+                <Item>
+                    <Term>Born </Term>
+                    <span>{born}</span>
+                </Item>
+                <Item>
+                    <Term>Died </Term>
+                    <span>{died}</span>
+                </Item>
+                <Item>
+                    <Term>Culture </Term>
+                    <span>{culture}</span>
+                </Item>
+            </ListGroup>
+        </>
+    )
+};
