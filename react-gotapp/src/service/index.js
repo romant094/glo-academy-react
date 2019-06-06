@@ -13,16 +13,20 @@ export default class GotService {
         return await res.json();
     }
 
-    getAllCharacters() {
-        return this.getResourse('/characters?page=10&pageSize=10')
+    async getAllCharacters() {
+        const res = await this.getResourse('/characters?page=10&pageSize=10');
+        return res.map(this._transformChar);
     }
-    getCharacter(id) {
-        return this.getResourse(`/characters/${id}`)
+
+    async getCharacter(id) {
+        const res= await this.getResourse(`/characters/${id}`)
+        return this._transformChar(res);
     }
 
     getAllHouses() {
         return this.getResourse('/houses')
     }
+
     getHouse(id) {
         return this.getResourse(`/houses/${id}`)
     }
@@ -30,7 +34,18 @@ export default class GotService {
     getAllBooks() {
         return this.getResourse('/books')
     }
+
     getBook(id) {
         return this.getResourse(`/books/${id}`)
     }
+
+    _transformChar = (char) => {
+        return {
+            name: char.name,
+            gender: char.gender,
+            born: char.born,
+            died: char.died,
+            culture: char.culture
+        }
+    };
 }
