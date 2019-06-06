@@ -48,4 +48,24 @@ export default class GotService {
             culture: char.culture
         }
     };
+
+    _transformHouse = (house) => {
+        return {
+            name: house.name,
+            region: house.region,
+            words: house.words,
+            titles: house.titles,
+            overlord: house.overlord,
+            ancestralWeapons: house.ancestralWeapons
+        }
+    };
+
+    _transformBook = (book) => {
+        return {
+            name: book.name,
+            numberOfPages: book.numberOfPages,
+            publisher: book.publisher,
+            released: book.released
+        }
+    };
 }
