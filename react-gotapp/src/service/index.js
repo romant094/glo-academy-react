@@ -5,12 +5,18 @@ export default class GotService {
 
     async getResourse(url) {
         const res = await fetch(this._apiBase + url);
+        const errors = [{id: 404, text: 'Not found'}, {id: 408, text: 'Timeout'}, {id: 410, text: 'Deleted'}];
+        const {status} = res;
 
-        if (!res.ok) {
-            throw new Error(`Could not fetch ${url}, status ${res.status}`);
+        if (status !== 200) {
+            if (status === 404 || status === 408 || status === 410) {
+                return errors.find(item => item.id === status);
+            } else {
+                throw new Error(`Could not fetch ${url}, status ${status}`)
+            }
+        } else {
+            return await res.json();
         }
-
-        return await res.json();
     }
 
     async getAllCharacters() {
@@ -19,7 +25,10 @@ export default class GotService {
     }
 
     async getCharacter(id) {
-        const res= await this.getResourse(`/characters/${id}`)
+        const res = await this.getResourse(`/characters/${id}`);
+        if (res.id) {
+            return res
+        }
         return this._transformChar(res);
     }
 

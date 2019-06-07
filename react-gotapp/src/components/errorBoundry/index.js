@@ -13,11 +13,12 @@ const ErrorText = styled.p`
 `;
 
 
-const ErrorBoundry = () => {
+const ErrorBoundry = ({errStatus}) => {
+    console.log(errStatus);
     return (
         <>
             <ErrorImg src={errorImg} alt="error"/>
-            <ErrorText>Something got wrong...</ErrorText>
+            <ErrorText>{errStatus ? `Error: ${errStatus.text}. Error code: ${errStatus.id}.` :'Something got wrong...'}</ErrorText>
         </>
 
     )

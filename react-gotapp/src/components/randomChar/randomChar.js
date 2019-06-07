@@ -38,7 +38,8 @@ export default class RandomChar extends Component {
     state = {
         char: {},
         loading: true,
-        error: false
+        error: false,
+        errStatus: null
     };
 
     onCharLoaded = (char) => {
@@ -57,26 +58,29 @@ export default class RandomChar extends Component {
 
     updateChar = () => {
         const id = Math.floor(Math.random() * 140 + 25);
-        this.gotService.getCharacter(id)
-            .then(this.onCharLoaded)
+        this.gotService.getCharacter(11111111)
+        // .then(this.onCharLoaded)
+            .then(res => {
+                const {id} = res;
+                if (id) {
+                    this.setState({
+                        errStatus: res,
+                        error: true,
+                        loading: false
+                    })
+                } else {
+                    this.onCharLoaded(res);
+                }
+            })
             .catch(this.onError)
     };
 
     render() {
-        const {char, loading, error} = this.state;
+        const {char, loading, error, errStatus} = this.state;
 
-
-        const err = error ? <ErrorBoundry/> : null;
+        const err = error ? <ErrorBoundry errStatus={errStatus}/> : null;
         const load = loading ? <Spinner/> : null;
         const content = !(error || loading) ? <View char={char}/> : null;
-
-
-        // const content = loading
-        //     ? <Spinner/>
-        //     : error
-        //         ? <ErrorBoundry/>
-        //         : <View char={char}/>;
-
         return (
             <Wrapper className="rounded">
                 {err}
