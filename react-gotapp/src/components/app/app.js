@@ -31,9 +31,7 @@ export default class App extends Component {
                 <Container>
                     <Row>
                         <Col lg={{size: 5, offset: 0}}>
-                            <div className={this.state.charVisible ? null : 'd-none'}>
-                                <RandomChar/>
-                            </div>
+                            {this.state.charVisible ? <RandomChar/> : null}
                         </Col>
                     </Row>
                     <Row>
