@@ -11,12 +11,10 @@ export default class CharacterPage extends Component {
     };
 
     onCharSelected = (id) => {
-        console.log('2');
         this.setState({selectedChar: id})
     };
 
     componentDidCatch(error, info) {
-        console.log('1');
         this.setState({error: true});
     }
 
@@ -25,8 +23,6 @@ export default class CharacterPage extends Component {
         if (this.state.error){
             return <ErrorBoundry/>
         }
-
-        console.log(this.state);
 
         return (
             <Row>

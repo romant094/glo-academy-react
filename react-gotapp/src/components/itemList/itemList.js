@@ -28,9 +28,9 @@ export default class ItemList extends Component {
     }
 
     renderItems = (arr) => {
-        return arr.map((item, i) => (
-            <Item key={i}
-                  onClick={()=>this.props.onCharSelected(91+i)}>
+        return arr.map((item) => (
+            <Item key={item.key}
+                  onClick={()=>this.props.onCharSelected(item.key)}>
                 {item.name}
             </Item>
         ))

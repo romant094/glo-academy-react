@@ -49,12 +49,16 @@ export default class GotService {
     }
 
     _transformChar = (char) => {
+        const url = char.url;
+        const key = url.slice(url.length - 2);
+
         return {
             name: char.name,
             gender: char.gender,
             born: char.born,
             died: char.died,
-            culture: char.culture
+            culture: char.culture,
+            key: key
         }
     };
 
