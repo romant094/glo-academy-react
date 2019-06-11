@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import ErrorBoundry from "../errorBoundry";
+import CharacterPage from "../characterPage";
 
 
 export default class App extends Component {
     state = {
-        charVisible: true
+        charVisible: true,
+        error: false
     };
 
     charVisibleToggle = () => {
@@ -17,9 +18,18 @@ export default class App extends Component {
         }))
     };
 
+    componentDidCatch(error, info) {
+        console.log('error');
+        this.setState({error: true});
+    }
+
     render() {
+        if (this.state.error){
+            return <ErrorBoundry/>
+        }
         return (
             <>
+                Hello
                 <Container>
                     <Header/>
                     <Button color={'primary'}
@@ -34,14 +44,7 @@ export default class App extends Component {
                             {this.state.charVisible ? <RandomChar/> : null}
                         </Col>
                     </Row>
-                    <Row>
-                        <Col md='6'>
-                            <ItemList/>
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails/>
-                        </Col>
-                    </Row>
+                    <CharacterPage/>
                 </Container>
             </>
         )

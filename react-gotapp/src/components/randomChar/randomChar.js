@@ -9,6 +9,10 @@ const Wrapper = styled.div`
     background-color: #fff;
     padding: 25px 25px 15px 25px;
     margin-bottom: 40px;
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
     h4 {
         margin-bottom: 20px;
@@ -27,10 +31,6 @@ const Term = styled.span`
 
 
 export default class RandomChar extends Component {
-    constructor(props) {
-        super(props);
-        this.updateChar();
-    }
 
     gotService = new GotService();
 
@@ -73,6 +73,15 @@ export default class RandomChar extends Component {
             .catch(this.onError)
     };
 
+    componentDidMount() {
+        this.updateChar();
+        this.timerId = setInterval(this.updateChar, 1500);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId);
+    }
+
     render() {
         const {char, loading, error, errStatus} = this.state;
 
@@ -92,7 +101,7 @@ export default class RandomChar extends Component {
 const View = ({char}) => {
     const {name, gender, born, died, culture} = char;
     return (
-        <>
+        <div>
             <h4>Random Character: {name}</h4>
             <ListGroup className="list-group-flush">
                 <Item>
@@ -112,6 +121,6 @@ const View = ({char}) => {
                     <span>{culture}</span>
                 </Item>
             </ListGroup>
-        </>
+        </div>
     )
 };
