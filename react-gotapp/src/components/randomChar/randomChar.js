@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
-import GotService from "../../service";
+import GotService from "../../services";
 import Spinner from "../spinner";
 import ErrorBoundry from "../errorBoundry";
 

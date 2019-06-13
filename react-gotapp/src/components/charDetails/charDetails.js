@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
-import GotService from "../../service";
+import GotService from "../../services";
+import Spinner from "../spinner";
+import ErrorBoundry from "../errorBoundry";
 
 const CharDetailsBlock = styled.div`
     background-color: #fff;
@@ -33,7 +35,9 @@ export default class CharDetails extends Component {
     gotService = new GotService();
 
     state = {
-        char: null
+        char: null,
+        loading: true,
+        error: false
     };
 
     componentDidMount() {
@@ -41,30 +45,48 @@ export default class CharDetails extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.charId !== prevProps.charId){
+        if (this.props.charId !== prevProps.charId) {
             this.updateChar();
         }
     }
 
+    componentDidCatch(error, info) {
+        this.setState({
+            error: true
+        })
+    }
+
+
     updateChar = () => {
         const {charId} = this.props;
+
         if (!charId) {
             return;
         }
 
         this.gotService.getCharacter(charId)
             .then((char) => {
-                this.setState({char});
+                this.setState({
+                    char,
+                    loading: false
+                });
             });
     };
 
     render() {
-        const {char} = this.state;
+        const {char, loading, error} = this.state;
+        // const {born, culture, died, gender, name} = this.state.char;
 
         if (!char) {
             return <NotSelected>Please select a character</NotSelected>
         }
 
+        if (error) {
+            return <ErrorBoundry/>
+        }
+        if (loading) {
+            return <Spinner/>
+        }
         const {born, culture, died, gender, name} = char;
 
         return (

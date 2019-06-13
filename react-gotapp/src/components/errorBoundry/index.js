@@ -14,7 +14,6 @@ const ErrorText = styled.p`
 
 
 const ErrorBoundry = ({errStatus}) => {
-    console.log(errStatus);
     return (
         <>
             <ErrorImg src={errorImg} alt="error"/>

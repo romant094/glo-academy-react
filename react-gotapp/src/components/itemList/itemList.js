@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
-import GotService from "../../service";
+import GotService from "../../services";
 import Spinner from "../spinner";
+import ErrorBoundry from "../errorBoundry";
 
 const Item = styled(ListGroupItem)`
     cursor: pointer;
@@ -17,7 +18,9 @@ export default class ItemList extends Component {
 
     gotService = new GotService();
     state = {
-        charList: null
+        charList: null,
+        error: false,
+        loading: true
     };
 
     componentDidMount() {
@@ -27,17 +30,24 @@ export default class ItemList extends Component {
             })
     }
 
+    componentDidCatch(error, info) {
+        this.setState({
+            error: true
+        })
+    }
+
+
     renderItems = (arr) => {
         return arr.map((item) => (
             <Item key={item.key}
-                  onClick={()=>this.props.onCharSelected(item.key)}>
+                  onClick={() => this.props.onCharSelected(item.key)}>
                 {item.name}
             </Item>
         ))
     };
 
     render() {
-        const {charList} = this.state;
+        const {charList, error} = this.state;
 
         if (!charList) {
             return <Spinner/>
@@ -48,6 +58,9 @@ export default class ItemList extends Component {
         return (
             <ListGroup>
                 {items}
+                {error
+                    ? <ErrorBoundry/>
+                    : null}
             </ListGroup>
         );
     }

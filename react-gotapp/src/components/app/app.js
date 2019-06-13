@@ -24,12 +24,12 @@ export default class App extends Component {
     }
 
     render() {
-        if (this.state.error){
+        const {error, charVisible} = this.state;
+        if (error){
             return <ErrorBoundry/>
         }
         return (
             <>
-                Hello
                 <Container>
                     <Header/>
                     <Button color={'primary'}
@@ -41,7 +41,7 @@ export default class App extends Component {
                 <Container>
                     <Row>
                         <Col lg={{size: 5, offset: 0}}>
-                            {this.state.charVisible ? <RandomChar/> : null}
+                            {charVisible ? <RandomChar/> : null}
                         </Col>
                     </Row>
                     <CharacterPage/>

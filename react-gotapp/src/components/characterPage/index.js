@@ -1,17 +1,21 @@
 import React, {Component} from 'react';
-import {Col, Row, Container, Button} from 'reactstrap';
+import {Col, Row} from 'reactstrap';
 import ItemList from "../itemList";
 import CharDetails from '../charDetails';
 import ErrorBoundry from '../errorBoundry';
 
 export default class CharacterPage extends Component {
     state = {
-        selectedChar: 130,
-        error: false
+        selectedChar: null,
+        error: false,
+        loading: false
     };
 
     onCharSelected = (id) => {
-        this.setState({selectedChar: id})
+        this.setState({
+            selectedChar: id,
+            error: false
+        })
     };
 
     componentDidCatch(error, info) {
@@ -19,8 +23,9 @@ export default class CharacterPage extends Component {
     }
 
     render() {
+        const {error, selectedChar} = this.state;
 
-        if (this.state.error){
+        if (error) {
             return <ErrorBoundry/>
         }
 
@@ -30,7 +35,7 @@ export default class CharacterPage extends Component {
                     <ItemList onCharSelected={this.onCharSelected}/>
                 </Col>
                 <Col md='6'>
-                    <CharDetails charId={this.state.selectedChar}/>
+                    <CharDetails charId={selectedChar}/>
                 </Col>
             </Row>
         );
