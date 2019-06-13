@@ -52,6 +52,12 @@ export default class GotService {
         const url = char.url;
         const key = url.slice(url.length - 2);
 
+        for (let prop in char){
+            if (char[prop]===''){
+                char[prop] = '<no data>'
+            }
+        }
+
         return {
             name: char.name,
             gender: char.gender,
