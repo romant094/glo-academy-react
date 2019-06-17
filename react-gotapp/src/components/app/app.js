@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ErrorBoundry from "../errorBoundry";
+import ErrorBoundry from "../Error";
 import CharacterPage from "../characterPage";
 
 

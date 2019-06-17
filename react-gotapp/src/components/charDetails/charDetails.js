@@ -3,7 +3,7 @@ import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
 import GotService from "../../services";
 import Spinner from "../spinner";
-import ErrorBoundry from "../errorBoundry";
+import ErrorBoundry from "../Error";
 
 const CharDetailsBlock = styled.div`
     background-color: #fff;

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Col, Row} from 'reactstrap';
 import ItemList from "../itemList";
 import CharDetails from '../charDetails';
-import ErrorBoundry from '../errorBoundry';
+import ErrorBoundry from '../Error';
 
 export default class CharacterPage extends Component {
     state = {

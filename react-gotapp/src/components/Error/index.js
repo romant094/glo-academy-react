@@ -13,7 +13,7 @@ const ErrorText = styled.p`
 `;
 
 
-const ErrorBoundry = ({errStatus}) => {
+const Error = ({errStatus}) => {
     return (
         <>
             <ErrorImg src={errorImg} alt="error"/>
@@ -23,4 +23,4 @@ const ErrorBoundry = ({errStatus}) => {
     )
 };
 
-export default ErrorBoundry;
+export default Error;

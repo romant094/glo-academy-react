@@ -48,9 +48,12 @@ export default class GotService {
         return this.getResourse(`/books/${id}`)
     }
 
+    _extractId = item => {
+        const idRegExp = /\/([0-9]*)$/;
+        return item.url.match(idRegExp)[1];
+    };
+
     _transformChar = (char) => {
-        const url = char.url;
-        const key = url.slice(url.length - 2);
 
         for (let prop in char){
             if (char[prop]===''){
@@ -64,7 +67,7 @@ export default class GotService {
             born: char.born,
             died: char.died,
             culture: char.culture,
-            key: key
+            key: this._extractId(char)
         }
     };
 
