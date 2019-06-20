@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
-import GotService from "../../services";
 import Spinner from "../spinner";
 import ErrorBoundry from "../Error";
 
@@ -15,18 +14,18 @@ const Item = styled(ListGroupItem)`
 `;
 
 export default class ItemList extends Component {
-
-    gotService = new GotService();
     state = {
-        charList: null,
+        itemList: null,
         error: false,
         loading: true
     };
 
     componentDidMount() {
-        this.gotService.getAllCharacters()
-            .then((charList) => {
-                this.setState({charList})
+        const {getData} = this.props;
+
+        getData()
+            .then((itemList) => {
+                this.setState({itemList})
             })
     }
 
@@ -47,20 +46,22 @@ export default class ItemList extends Component {
     };
 
     render() {
-        const {charList, error} = this.state;
+        const {itemList, error} = this.state;
 
-        if (!charList) {
+        if (!itemList) {
             return <Spinner/>
         }
 
-        const items = this.renderItems(charList);
+        const items = this.renderItems(itemList);
 
         return (
             <ListGroup>
                 {items}
-                {error
-                    ? <ErrorBoundry/>
-                    : null}
+                {
+                    error
+                        ? <ErrorBoundry/>
+                        : null
+                }
             </ListGroup>
         );
     }

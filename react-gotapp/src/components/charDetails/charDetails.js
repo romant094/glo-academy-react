@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
-import GotService from "../../services";
 import Spinner from "../spinner";
 import ErrorBoundry from "../Error";
 
@@ -32,7 +31,6 @@ const NotSelected = styled.span`
 `;
 
 export default class CharDetails extends Component {
-    gotService = new GotService();
 
     state = {
         char: null,
@@ -58,13 +56,13 @@ export default class CharDetails extends Component {
 
 
     updateChar = () => {
-        const {charId} = this.props;
+        const {charId, getData} = this.props;
 
         if (!charId) {
             return;
         }
 
-        this.gotService.getCharacter(charId)
+        getData(charId)
             .then((char) => {
                 this.setState({
                     char,
@@ -75,7 +73,6 @@ export default class CharDetails extends Component {
 
     render() {
         const {char, loading, error} = this.state;
-        // const {born, culture, died, gender, name} = this.state.char;
 
         if (!char) {
             return <NotSelected>Please select a character</NotSelected>

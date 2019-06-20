@@ -3,7 +3,7 @@ export default class GotService {
         this._apiBase = 'https://www.anapioficeandfire.com/api';
     }
 
-    async getResourse(url) {
+    getResourse = async (url) => {
         const res = await fetch(this._apiBase + url);
         const errors = [{id: 404, text: 'Not found'}, {id: 408, text: 'Timeout'}, {id: 410, text: 'Deleted'}];
         const {status} = res;
@@ -17,36 +17,36 @@ export default class GotService {
         } else {
             return await res.json();
         }
-    }
+    };
 
-    async getAllCharacters() {
+    getAllCharacters = async () => {
         const res = await this.getResourse('/characters?page=10&pageSize=10');
         return res.map(this._transformChar);
-    }
+    };
 
-    async getCharacter(id) {
+    getCharacter = async (id) => {
         const res = await this.getResourse(`/characters/${id}`);
         if (res.id) {
             return res
         }
         return this._transformChar(res);
-    }
+    };
 
-    getAllHouses() {
+    getAllHouses = () => {
         return this.getResourse('/houses')
-    }
+    };
 
-    getHouse(id) {
+    getHouse = (id) => {
         return this.getResourse(`/houses/${id}`)
-    }
+    };
 
-    getAllBooks() {
+    getAllBooks = () => {
         return this.getResourse('/books')
-    }
+    };
 
-    getBook(id) {
+    getBook = (id) => {
         return this.getResourse(`/books/${id}`)
-    }
+    };
 
     _extractId = item => {
         const idRegExp = /\/([0-9]*)$/;
@@ -55,8 +55,8 @@ export default class GotService {
 
     _transformChar = (char) => {
 
-        for (let prop in char){
-            if (char[prop]===''){
+        for (let prop in char) {
+            if (char[prop] === '') {
                 char[prop] = '<no data>'
             }
         }

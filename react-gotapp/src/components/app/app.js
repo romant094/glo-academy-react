@@ -4,9 +4,12 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorBoundry from "../Error";
 import CharacterPage from "../characterPage";
+import GotService from "../../services";
 
 
 export default class App extends Component {
+    gotService = new GotService();
+
     state = {
         charVisible: true,
         error: false
@@ -45,6 +48,22 @@ export default class App extends Component {
                         </Col>
                     </Row>
                     <CharacterPage/>
+                    {/*<Row>
+                        <Col md='6'>
+                            <ItemList onCharSelected={this.onCharSelected}/>
+                        </Col>
+                        <Col md='6'>
+                            <CharDetails charId={selectedChar}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md='6'>
+                            <ItemList onCharSelected={this.onCharSelected}/>
+                        </Col>
+                        <Col md='6'>
+                            <CharDetails charId={selectedChar}/>
+                        </Col>
+                    </Row>*/}
                 </Container>
             </>
         )
