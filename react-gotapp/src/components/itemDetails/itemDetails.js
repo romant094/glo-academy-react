@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
 import Spinner from "../spinner";
-import ErrorBoundry from "../Error";
+import Error from "../Error";
 
-const CharDetailsBlock = styled.div`
+const ItemDetailsBlock = styled.div`
     background-color: #fff;
     padding: 25px 25px 15px 25px;
     margin-bottom: 40px;
@@ -30,10 +30,10 @@ const NotSelected = styled.span`
     font-size: 26px;
 `;
 
-export default class CharDetails extends Component {
+export default class ItemDetails extends Component {
 
     state = {
-        char: null,
+        item: null,
         loading: true,
         error: false
     };
@@ -63,51 +63,49 @@ export default class CharDetails extends Component {
         }
 
         getData(charId)
-            .then((char) => {
+            .then((item) => {
                 this.setState({
-                    char,
+                    item,
                     loading: false
                 });
             });
     };
 
     render() {
-        const {char, loading, error} = this.state;
+        const {item, loading, error} = this.state;
 
-        if (!char) {
-            return <NotSelected>Please select a character</NotSelected>
+        if (!item) {
+            return <NotSelected>Please select an item</NotSelected>
         }
-
         if (error) {
-            return <ErrorBoundry/>
+            return <Error/>
         }
         if (loading) {
             return <Spinner/>
         }
-        const {born, culture, died, gender, name} = char;
+
+        const {name} = item;
+
+        const itemDetails = [];
+
+        for (const prop in item) {
+            if (prop !== 'id') {
+                itemDetails.push((
+                    <Item key={prop}>
+                        <Term>{prop[0].toUpperCase() + prop.slice(1)}</Term>
+                        <span>{item[prop]}</span>
+                    </Item>
+                ));
+            }
+        }
 
         return (
-            <CharDetailsBlock className="rounded">
+            <ItemDetailsBlock className="rounded">
                 <h4>{name}</h4>
                 <ListGroup className='list-group-flush'>
-                    <Item>
-                        <Term>Gender</Term>
-                        <span>{gender}</span>
-                    </Item>
-                    <Item>
-                        <Term>Born</Term>
-                        <span>{born}</span>
-                    </Item>
-                    <Item>
-                        <Term>Died</Term>
-                        <span>{died}</span>
-                    </Item>
-                    <Item>
-                        <Term>Culture</Term>
-                        <span>{culture}</span>
-                    </Item>
+                    {itemDetails}
                 </ListGroup>
-            </CharDetailsBlock>
+            </ItemDetailsBlock>
         );
     }
 }

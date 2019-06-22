@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
 import Spinner from "../spinner";
-import ErrorBoundry from "../Error";
+import Error from "../Error";
 
 const Item = styled(ListGroupItem)`
     cursor: pointer;
@@ -38,8 +38,8 @@ export default class ItemList extends Component {
 
     renderItems = (arr) => {
         return arr.map((item) => (
-            <Item key={item.key}
-                  onClick={() => this.props.onCharSelected(item.key)}>
+            <Item key={item.id}
+                  onClick={() => this.props.onItemSelected(item.id)}>
                 {item.name}
             </Item>
         ))
@@ -59,7 +59,7 @@ export default class ItemList extends Component {
                 {items}
                 {
                     error
-                        ? <ErrorBoundry/>
+                        ? <Error/>
                         : null
                 }
             </ListGroup>

@@ -3,7 +3,7 @@ import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
 import GotService from "../../services";
 import Spinner from "../spinner";
-import ErrorBoundry from "../Error";
+import Error from "../Error";
 
 const Wrapper = styled.div`
     background-color: #fff;
@@ -59,8 +59,8 @@ export default class RandomChar extends Component {
         const id = Math.floor(Math.random() * 140 + 25);
         this.gotService.getCharacter(id)
             .then(res => {
-                const {id} = res;
-                if (id) {
+                const {err} = res;
+                if (err) {
                     this.setState({
                         errStatus: res,
                         error: true,
@@ -85,7 +85,7 @@ export default class RandomChar extends Component {
     render() {
         const {char, loading, error, errStatus} = this.state;
 
-        const err = error ? <ErrorBoundry errStatus={errStatus}/> : null;
+        const err = error ? <Error errStatus={errStatus}/> : null;
         const load = loading ? <Spinner/> : null;
         const content = !(error || loading) ? <View char={char}/> : null;
         return (

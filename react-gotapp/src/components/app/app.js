@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ErrorBoundry from "../Error";
-import CharacterPage from "../characterPage";
+import Error from "../Error";
+import ItemPage from "../page/itemPage";
 import GotService from "../../services";
-
 
 export default class App extends Component {
     gotService = new GotService();
@@ -29,7 +28,7 @@ export default class App extends Component {
     render() {
         const {error, charVisible} = this.state;
         if (error){
-            return <ErrorBoundry/>
+            return <Error/>
         }
         return (
             <>
@@ -47,23 +46,18 @@ export default class App extends Component {
                             {charVisible ? <RandomChar/> : null}
                         </Col>
                     </Row>
-                    <CharacterPage/>
-                    {/*<Row>
-                        <Col md='6'>
-                            <ItemList onCharSelected={this.onCharSelected}/>
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails charId={selectedChar}/>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md='6'>
-                            <ItemList onCharSelected={this.onCharSelected}/>
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails charId={selectedChar}/>
-                        </Col>
-                    </Row>*/}
+                    <ItemPage
+                        getItems={this.gotService.getAllCharacters}
+                        getItem={this.gotService.getCharacter}
+                    />
+                    <ItemPage
+                        getItems={this.gotService.getAllBooks}
+                        getItem={this.gotService.getBook}
+                    />
+                    <ItemPage
+                        getItems={this.gotService.getAllHouses}
+                        getItem={this.gotService.getHouse}
+                    />
                 </Container>
             </>
         )

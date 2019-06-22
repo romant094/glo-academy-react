@@ -3,14 +3,14 @@ export default class GotService {
         this._apiBase = 'https://www.anapioficeandfire.com/api';
     }
 
-    getResourse = async (url) => {
+    getResource = async (url) => {
         const res = await fetch(this._apiBase + url);
-        const errors = [{id: 404, text: 'Not found'}, {id: 408, text: 'Timeout'}, {id: 410, text: 'Deleted'}];
+        const errors = [{err: 404, text: 'Not found'}, {err: 408, text: 'Timeout'}, {err: 410, text: 'Deleted'}];
         const {status} = res;
 
         if (status !== 200) {
             if (status === 404 || status === 408 || status === 410) {
-                return errors.find(item => item.id === status);
+                return errors.find(item => item.err === status);
             } else {
                 throw new Error(`Could not fetch ${url}, status ${status}`)
             }
@@ -20,32 +20,33 @@ export default class GotService {
     };
 
     getAllCharacters = async () => {
-        const res = await this.getResourse('/characters?page=10&pageSize=10');
+        const res = await this.getResource('/characters?page=10&pageSize=10');
         return res.map(this._transformChar);
     };
 
     getCharacter = async (id) => {
-        const res = await this.getResourse(`/characters/${id}`);
-        if (res.id) {
-            return res
-        }
+        const res = await this.getResource(`/characters/${id}`);
         return this._transformChar(res);
     };
 
-    getAllHouses = () => {
-        return this.getResourse('/houses')
+    getAllHouses = async () => {
+        const res = await this.getResource('/houses');
+        return res.map(this._transformHouse);
     };
 
-    getHouse = (id) => {
-        return this.getResourse(`/houses/${id}`)
+    getHouse = async (id) => {
+        const res = await this.getResource(`/houses/${id}`);
+        return this._transformHouse(res);
     };
 
-    getAllBooks = () => {
-        return this.getResourse('/books')
+    getAllBooks = async () => {
+        const res = await this.getResource('/books');
+        return res.map(this._transformBook);
     };
 
-    getBook = (id) => {
-        return this.getResourse(`/books/${id}`)
+    getBook = async (id) => {
+        const res = await this.getResource(`/books/${id}`);
+        return this._transformBook(res);
     };
 
     _extractId = item => {
@@ -53,41 +54,49 @@ export default class GotService {
         return item.url.match(idRegExp)[1];
     };
 
-    _transformChar = (char) => {
-
-        for (let prop in char) {
-            if (char[prop] === '') {
-                char[prop] = '<no data>'
+    _isData = item => {
+        for (const prop in item) {
+            if (item[prop] === '') {
+                item[prop] = '<no data>'
             }
         }
+        return item;
+    };
+
+    _transformChar = (char) => {
+        const item = this._isData(char);
 
         return {
-            name: char.name,
-            gender: char.gender,
-            born: char.born,
-            died: char.died,
-            culture: char.culture,
-            key: this._extractId(char)
+            name: item.name,
+            gender: item.gender,
+            born: item.born,
+            died: item.died,
+            culture: item.culture,
+            id: this._extractId(char)
         }
     };
 
     _transformHouse = (house) => {
+        const item = this._isData(house);
+
         return {
-            name: house.name,
-            region: house.region,
-            words: house.words,
-            titles: house.titles,
-            overlord: house.overlord,
-            ancestralWeapons: house.ancestralWeapons
+            name: item.name,
+            region: item.region,
+            words: item.words,
+            founded: item.founded,
+            id: this._extractId(house)
         }
     };
 
     _transformBook = (book) => {
+        const item = this._isData(book);
+
         return {
-            name: book.name,
-            numberOfPages: book.numberOfPages,
-            publisher: book.publisher,
-            released: book.released
+            name: item.name,
+            numberOfPages: item.numberOfPages,
+            publisher: item.publisher,
+            released: item.released,
+            id: this._extractId(book)
         }
     };
 }
