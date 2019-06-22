@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
-import GotService from "../../services";
 import Spinner from "../spinner";
 import Error from "../Error";
 
@@ -32,8 +31,6 @@ const Term = styled.span`
 
 export default class RandomChar extends Component {
 
-    gotService = new GotService();
-
     state = {
         char: {},
         loading: true,
@@ -57,7 +54,7 @@ export default class RandomChar extends Component {
 
     updateChar = () => {
         const id = Math.floor(Math.random() * 140 + 25);
-        this.gotService.getCharacter(id)
+        this.props.getCharacter(id)
             .then(res => {
                 const {err} = res;
                 if (err) {

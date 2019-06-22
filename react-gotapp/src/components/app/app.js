@@ -43,7 +43,7 @@ export default class App extends Component {
                 <Container>
                     <Row>
                         <Col lg={{size: 5, offset: 0}}>
-                            {charVisible ? <RandomChar/> : null}
+                            {charVisible ? <RandomChar getCharacter={this.gotService.getCharacter}/> : null}
                         </Col>
                     </Row>
                     <ItemPage
