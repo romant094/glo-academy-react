@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ItemList from "../itemList";
-import ItemDetails from '../itemDetails/itemDetails';
+import ItemDetails from '../itemDetails';
 import Error from '../Error';
 import RowBlock from '../rowBlock';
 
