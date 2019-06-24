@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Col, Row} from 'reactstrap';
 import ItemList from "../itemList";
 import ItemDetails from '../itemDetails/itemDetails';
 import Error from '../Error';
+import RowBlock from '../rowBlock';
 
 export default class ItemPage extends Component {
 
@@ -31,17 +31,24 @@ export default class ItemPage extends Component {
             return <Error/>
         }
 
+        const itemList = () => (
+            <ItemList onItemSelected={this.onItemSelected}
+                      getData={getItems}
+                      renderItem={item => item.name}
+            />
+        );
+
+        const itemDetails = () => (
+            <ItemDetails charId={selectedItem}
+                         getData={getItem}
+            />
+        );
+
         return (
-            <Row className='mb-4'>
-                <Col md='6'>
-                    <ItemList onItemSelected={this.onItemSelected}
-                              getData={getItems}/>
-                </Col>
-                <Col md='6'>
-                    <ItemDetails charId={selectedItem}
-                                 getData={getItem}/>
-                </Col>
-            </Row>
+            <RowBlock
+                left={itemList()}
+                right={itemDetails()}
+            />
         );
     }
 }

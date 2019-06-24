@@ -27,7 +27,7 @@ export default class App extends Component {
 
     render() {
         const {error, charVisible} = this.state;
-        if (error){
+        if (error) {
             return <Error/>
         }
         return (
