@@ -49,14 +49,17 @@ export default class App extends Component {
                     <ItemPage
                         getItems={this.gotService.getAllCharacters}
                         getItem={this.gotService.getCharacter}
+                        itemType='character'
                     />
                     <ItemPage
                         getItems={this.gotService.getAllBooks}
                         getItem={this.gotService.getBook}
+                        itemType='book'
                     />
                     <ItemPage
                         getItems={this.gotService.getAllHouses}
                         getItem={this.gotService.getHouse}
+                        itemType='house'
                     />
                 </Container>
             </>

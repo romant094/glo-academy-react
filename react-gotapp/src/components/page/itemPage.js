@@ -41,6 +41,7 @@ export default class ItemPage extends Component {
         const itemDetails = () => (
             <ItemDetails charId={selectedItem}
                          getData={getItem}
+                         itemType={this.props.itemType}
             />
         );
 

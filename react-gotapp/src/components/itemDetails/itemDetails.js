@@ -75,7 +75,7 @@ export default class ItemDetails extends Component {
         const {item, loading, error} = this.state;
 
         if (!item) {
-            return <NotSelected>Please select an item</NotSelected>
+            return <NotSelected>Please select {this.props.itemType} from the list</NotSelected>
         }
         if (error) {
             return <Error/>
