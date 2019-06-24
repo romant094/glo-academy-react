@@ -5,6 +5,7 @@ import RandomChar from '../randomChar';
 import Error from "../Error";
 import ItemPage from "../page/itemPage";
 import GotService from "../../services";
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 export default class App extends Component {
     gotService = new GotService();
@@ -31,7 +32,7 @@ export default class App extends Component {
             return <Error/>
         }
         return (
-            <>
+            <Router>
                 <Container>
                     <Header/>
                     <Button color={'primary'}
@@ -46,23 +47,29 @@ export default class App extends Component {
                             {charVisible ? <RandomChar getCharacter={this.gotService.getCharacter}/> : null}
                         </Col>
                     </Row>
-                    <ItemPage
-                        getItems={this.gotService.getAllCharacters}
-                        getItem={this.gotService.getCharacter}
-                        itemType='character'
-                    />
-                    <ItemPage
-                        getItems={this.gotService.getAllBooks}
-                        getItem={this.gotService.getBook}
-                        itemType='book'
-                    />
-                    <ItemPage
-                        getItems={this.gotService.getAllHouses}
-                        getItem={this.gotService.getHouse}
-                        itemType='house'
-                    />
+                    <Route path='/characters' render={() => (
+                        <ItemPage
+                            getItems={this.gotService.getAllCharacters}
+                            getItem={this.gotService.getCharacter}
+                            itemType='character'
+                        />
+                    )}/>
+                    <Route path='/houses' render={() => (
+                        <ItemPage
+                            getItems={this.gotService.getAllHouses}
+                            getItem={this.gotService.getHouse}
+                            itemType='house'
+                        />
+                    )}/>
+                    <Route path='/books' render={() => (
+                        <ItemPage
+                            getItems={this.gotService.getAllBooks}
+                            getItem={this.gotService.getBook}
+                            itemType='book'
+                        />
+                    )}/>
                 </Container>
-            </>
+            </Router>
         )
     }
 }
