@@ -20,7 +20,7 @@ export default class GotService {
     };
 
     getAllCharacters = async () => {
-        const res = await this.getResource('/characters?page=10&pageSize=10');
+        const res = await this.getResource('/characters?pages=10&pageSize=10');
         return res.map(this._transformChar);
     };
 
