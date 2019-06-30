@@ -25,7 +25,7 @@ export default class ItemPage extends Component {
 
     render() {
         const {error, selectedItem} = this.state;
-        const {getItem, getItems} = this.props;
+        const {getItem, getItems, itemType} = this.props;
 
         if (error) {
             return <Error/>
@@ -35,15 +35,18 @@ export default class ItemPage extends Component {
             <ItemList onItemSelected={this.onItemSelected}
                       getData={getItems}
                       renderItem={item => item.name}
+                      ownPage={this.props.itemType === 'book'}
             />
         );
 
         const itemDetails = () => (
             <ItemDetails charId={selectedItem}
                          getData={getItem}
-                         itemType={this.props.itemType}
+                         itemType={itemType}
             />
         );
+
+
 
         return (
             <RowBlock

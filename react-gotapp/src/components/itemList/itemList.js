@@ -3,6 +3,7 @@ import {ListGroup, ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
 import Spinner from "../spinner";
 import Error from "../Error";
+import {Link} from "react-router-dom";
 
 const Item = styled(ListGroupItem)`
     cursor: pointer;
@@ -11,6 +12,12 @@ const Item = styled(ListGroupItem)`
         background-color: #eee;
         font-weight: bold;
     }
+`;
+
+const LinkTo = styled(Link)`
+    display: block;
+    width: 100%;
+    height: 100%;
 `;
 
 export default class ItemList extends Component {
@@ -37,15 +44,24 @@ export default class ItemList extends Component {
 
 
     renderItems = (arr) => {
+        const {ownPage, renderItem, onItemSelected} = this.props;
         return arr.map((item) => {
             const {id} = item;
-            const label = this.props.renderItem(item);
-            return (
-                <Item key={id}
-                      onClick={() => this.props.onItemSelected(id)}>
-                    {label}
-                </Item>
-            )
+            const label = renderItem(item);
+            if (!ownPage) {
+                return (
+                    <Item key={id}
+                          onClick={() => onItemSelected(id)}>
+                        {label}
+                    </Item>
+                )
+            } else {
+                return(
+                    <Item key={id}>
+                        <LinkTo to={`books/${id}`}>{label}</LinkTo>
+                    </Item>
+                )
+            }
         })
     };
 
