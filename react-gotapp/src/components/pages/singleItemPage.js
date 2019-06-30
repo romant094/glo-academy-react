@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {ItemDetailsBlock} from '../styledComponents';
 import {ListGroup} from "reactstrap";
-import {itemDetails} from '../itemDetails';
 import Spinner from "../spinner";
 
 export default class SingleItemPage extends Component {
@@ -31,8 +30,8 @@ export default class SingleItemPage extends Component {
         for (const prop in item) {
             if (prop !== 'id') {
                 itemDetails.push((
-                    <li key={prop}>
-                        <span>{prop[0].toUpperCase() + prop.slice(1)}</span>
+                    <li key={prop} className='d-flex justify-content-between list-group-item'>
+                        <span className='font-weight-bold'>{prop[0].toUpperCase() + prop.slice(1)}</span>
                         <span>{item[prop]}</span>
                     </li>
                 ));

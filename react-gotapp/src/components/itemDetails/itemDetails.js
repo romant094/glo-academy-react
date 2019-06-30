@@ -20,7 +20,7 @@ const NotSelected = styled.span`
     font-size: 26px;
 `;
 
-const itemDetails = (item) => {
+const iDetails = (item) => {
     const itemDetails = [];
 
     for (const prop in item) {
@@ -91,7 +91,7 @@ export default class ItemDetails extends Component {
             return <Spinner/>
         }
 
-        const details = itemDetails(item);
+        const details = iDetails(item);
 
         return (
             <ItemDetailsBlock className="rounded">
@@ -104,4 +104,4 @@ export default class ItemDetails extends Component {
     }
 }
 
-export {itemDetails};
+export {iDetails};

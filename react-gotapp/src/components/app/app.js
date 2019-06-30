@@ -6,16 +6,31 @@ import Error from "../Error";
 import ItemPage from "../pages";
 import {SingleItemPage} from '../pages';
 import GotService from "../../services";
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import background from './got.jpeg';
 import styled from 'styled-components';
 
 const AppWrapper = styled.div`
     overflow-x: hidden;
-    background: url('img/got.jpeg') center center no-repeat;
+    background: url(${background}) center center no-repeat;
     background-size: cover;
     font-size: 16px;
     height: 100%;
     min-height: 100vh;
+`;
+
+const ColorWhite = styled.div`
+    color: #fff;
+    width: 100%;
+    
+    a{
+        color: #fff;
+        
+        &:hover{
+            text-decoration: underline;
+            color: #ccc;            
+        }
+    }
 `;
 
 export default class App extends Component {
@@ -47,18 +62,35 @@ export default class App extends Component {
                 <AppWrapper>
                     <Container>
                         <Header/>
-                        <Button color={'primary'}
-                                onClick={this.charVisibleToggle}
-                                className={'mx-auto mb-3'}>
-                            Show / hide char
-                        </Button>
                     </Container>
                     <Container>
-                        <Row>
-                            <Col lg={{size: 5, offset: 0}}>
-                                {charVisible ? <RandomChar getCharacter={this.gotService.getCharacter}/> : null}
-                            </Col>
-                        </Row>
+                        <Route path='/' exact render={() => (
+                            <Row>
+                                <ColorWhite>
+                                    <Col lg={{size: 6, offset: 0}}
+                                         className='mx-auto'>
+                                        <h1>Hello! Welcome to GOT App!</h1>
+                                        <p>Visit random character page: <Link to='/random'>link</Link></p>
+                                    </Col>
+                                </ColorWhite>
+                            </Row>
+                        )}/>
+                        <Route path='/random' render={() => (
+                            <>
+                                <Row>
+                                    <Button color={'primary'}
+                                            onClick={this.charVisibleToggle}
+                                            className={'ml-3 mb-3'}>
+                                        Show / hide char
+                                    </Button>
+                                </Row>
+                                <Row>
+                                    <Col lg={{size: 5, offset: 0}}>
+                                        {charVisible ? <RandomChar getCharacter={this.gotService.getCharacter}/> : null}
+                                    </Col>
+                                </Row>
+                            </>
+                        )}/>
                         <Route path='/characters' render={() => (
                             <ItemPage
                                 getItems={this.gotService.getAllCharacters}
