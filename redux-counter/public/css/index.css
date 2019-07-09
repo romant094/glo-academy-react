@@ -25,7 +25,7 @@ body{
     justify-content: center;
     width: 300px;
     height: 300px;
-    margin: 0 auto 35px;
+    margin: 0 auto 20px;
     background-color: #fff;
     border-radius: 10px;
 }
@@ -40,6 +40,12 @@ body{
     width: 300px;
     display: flex;
     justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.counter-controls:last-child {
+    width: 200px;
+    margin-bottom: 0;
 }
 
 .counter-controls button{
@@ -63,4 +69,12 @@ body{
 
 .counter-controls__res{
     background-color: #CF1C1C;
+}
+
+.counter-controls__dow{
+    background-color: #30D9CF;
+}
+
+.counter-controls__upl{
+    background-color: #9B0F9E;
 }
