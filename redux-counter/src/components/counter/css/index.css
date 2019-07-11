@@ -28,6 +28,7 @@ body{
     margin: 0 auto 20px;
     background-color: #fff;
     border-radius: 10px;
+    transition: all 0.3s;
 }
 
 .counter-block span {
