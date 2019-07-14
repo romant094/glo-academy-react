@@ -28,13 +28,21 @@ class App extends Component {
     };
 
     onToggleFilter = () => {
-        const {filter} = this.props;
-        filter(!this.state.filter);
+        const {addFilter, removeFilter, items} = this.props;
+        const {filter} = this.state;
+
+        if (filter){
+            removeFilter(items);
+        } else {
+            this.setState({items: items});
+            addFilter(!filter);
+        }
+
         this.setState(state => ({filter: !state.filter}));
     };
 
     render() {
-        const {isValid, filter} = this.state;
+        const {isValid, filter, items} = this.state;
         return (
             <div className='wrapper'>
                 <div className='todoContainer'>

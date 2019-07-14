@@ -12,9 +12,16 @@ export const add = (label) => {
     }
 };
 
-export const filter = (filter) => {
+export const addFilter = (filter) => {
     return {
-        type: 'FILTER',
+        type: 'ADD_FILTER',
         payload: filter
+    }
+};
+
+export const removeFilter = (items) => {
+    return {
+        type: 'REMOVE_FILTER',
+        payload: items
     }
 };

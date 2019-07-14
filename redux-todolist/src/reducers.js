@@ -37,12 +37,10 @@ export const reducer = (state = arr, action) => {
         case 'CHECK':
             newState[payload].done = !newState[payload].done;
             return state = newState;
-        case 'FILTER':
-            if (payload === true) {
-                return newState.filter(item => item.done !== true);
-            } else {
-                return state;
-            }
+        case 'ADD_FILTER':
+            return newState.filter(item => item.done !== true);
+        case 'REMOVE_FILTER':
+            return state = payload;
         default:
             return state;
     }
