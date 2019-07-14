@@ -42,7 +42,7 @@ class App extends Component {
     };
 
     render() {
-        const {isValid, filter} = this.state;
+        const {isValid, filter, items} = this.state;
         return (
             <div className='wrapper'>
                 <div className='todoContainer'>
