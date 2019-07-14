@@ -1,0 +1,18 @@
+.ListGroupItem {
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #aaa !important;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 18px;
+    transition: all 0.5s;
+}
+
+.ListGroupItem.checked {
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.ListGroupItem:hover {
+    background-color: rgba(255, 255, 255, 0.67) !important;
+}
