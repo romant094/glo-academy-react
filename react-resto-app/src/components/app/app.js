@@ -7,6 +7,8 @@ import {Route, Switch} from 'react-router-dom';
 import Background from './food-bg.jpg';
 
 const App = ({RestoService}) => {
+    const items = RestoService.getItems('/menu');
+    console.log(items);
     return (
         <Switch>
             <div style={{background: `url(${Background}) center center/cover no-repeat`}}
