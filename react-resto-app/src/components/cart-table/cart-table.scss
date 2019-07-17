@@ -1,7 +1,7 @@
 .cart {
     padding-top: 120px;
     padding-bottom: 50px;
-    min-height: 100vh;
+    min-height: calc(100vh - 60px);
     &__title {
         font-size: 36px;
         color: #fff;

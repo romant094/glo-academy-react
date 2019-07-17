@@ -1,6 +1,6 @@
 .menu {
     &__list {
-        min-height: 100vh;
+        min-height: calc(100vh - 60px);
         padding: 50px;
         display: flex;
         justify-content: flex-start;

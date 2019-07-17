@@ -21,13 +21,29 @@
         object-fit: cover;
         margin-bottom: 20px;
     }
+    &__category{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &-left{
+            span {
+                font-weight: 700;
+            }
+        }
+        &-right{
+            width: 30px;
+            height: 30px;
+            img{
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
     &__category, &__price {
         font-size: 18px;
         font-weight: 300;
         margin-bottom: 10px;
-        span {
-            font-weight: 700;
-        }
     }
     &__btn {
         width: 150px;
