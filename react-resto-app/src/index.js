@@ -14,6 +14,7 @@ const restoService = new RestoService();
 
 const ReduxApp = () => {
     return (
+
         <Provider store={store}>
             <ErrorBoundry>
                 <RestoServiceContext.Provider value={restoService}>
@@ -27,7 +28,5 @@ const ReduxApp = () => {
 };
 
 
-ReactDOM.render(
-    <ReduxApp/>
-    , document.getElementById('root'));
+ReactDOM.render(<ReduxApp/>, document.getElementById('root'));
 
