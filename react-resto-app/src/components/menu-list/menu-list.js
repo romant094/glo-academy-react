@@ -27,8 +27,7 @@ class MenuList extends Component {
             .catch(e => {
                 console.log(e);
                 menuDownloadError();
-            });
-
+            })
     }
 
     render() {
@@ -42,23 +41,27 @@ class MenuList extends Component {
             return <Error/>
         }
 
-        const icons = {
-            salads,
-            meat,
-            pizza
-        };
-
-        return (
-            <ul className="menu__list">
-                {
-                    menuItems.map(menuItem => {
-                        return <MenuListItem key={menuItem.id} menuItem={menuItem} icons={icons}/>
-                    })
-                }
-            </ul>
-        )
+        return <RenderMenuList items={menuItems}/>
     }
 }
+
+const RenderMenuList = ({items}) => {
+    const icons = {
+        salads,
+        meat,
+        pizza
+    };
+
+    const render = items.map(menuItem => {
+        return <MenuListItem key={menuItem.id} menuItem={menuItem} icons={icons}/>
+    });
+
+    return (
+        <ul className="menu__list">
+            {render}
+        </ul>
+    )
+};
 
 const mapStateToProps = (state) => {
     const {menu, loading, error} = state;
