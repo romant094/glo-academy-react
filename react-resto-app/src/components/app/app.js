@@ -7,7 +7,7 @@ import Background from './food-bg.jpg';
 
 const style = {
     background: `url(${Background}) center center/cover no-repeat`,
-    minHeight: 'calc(100vh - 60px)',
+    minHeight: '100vh',
     height: '100%'
 };
 

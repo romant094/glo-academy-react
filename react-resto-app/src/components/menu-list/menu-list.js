@@ -53,7 +53,11 @@ const RenderMenuList = ({items}) => {
     };
 
     const render = items.map(menuItem => {
-        return <MenuListItem key={menuItem.id} menuItem={menuItem} icons={icons}/>
+        const {id} = menuItem;
+        return <MenuListItem key={id}
+                             menuItem={menuItem}
+                             icons={icons}
+        />
     });
 
     return (
