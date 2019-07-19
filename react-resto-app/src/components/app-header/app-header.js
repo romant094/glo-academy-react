@@ -7,14 +7,17 @@ const AppHeader = ({total}) => {
     return (
         <header className="header">
             <Link className="header__link"
-                  to='/'
+                  to='/menu-items'
             >
                 Menu
             </Link>
             <Link className="header__link"
                   to='/cart'
             >
-                <img className="header__cart" src={cartIcon} alt="cart"></img>
+                <img className="header__cart"
+                     src={cartIcon}
+                     alt="cart"
+                />
                 Total: {total} $
             </Link>
         </header>

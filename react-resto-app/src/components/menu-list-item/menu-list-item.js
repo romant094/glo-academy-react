@@ -1,8 +1,9 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 import './menu-list-item.scss';
 
 const MenuListItem = ({menuItem, icons}) => {
-    const {title, price, url, category} = menuItem;
+    const {title, price, url, category, id} = menuItem;
     const icon = icons[category];
 
     return (
@@ -20,7 +21,10 @@ const MenuListItem = ({menuItem, icons}) => {
                 </span>
             </div>
             <div className="menu__price">Price: <span>${price}</span></div>
-            <button className="menu__btn">Add to cart</button>
+            <div className='menu__item-footer'>
+                <button className="menu__btn">Add to cart</button>
+                <Link to={`/menu-items/${id}`}>More</Link>
+            </div>
         </li>
     )
 };

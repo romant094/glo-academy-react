@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
-import {MainPage, CartPage} from '../pages';
+import {MainPage, CartPage, MenuItemPage} from '../pages';
 import AppHeader from '../app-header';
 
 import Background from './food-bg.jpg';
@@ -19,7 +19,11 @@ const App = () => {
         >
             <AppHeader total={50}/>
             <Switch>
-                <Route path='/' exact render={() => <MainPage/>}/>
+                <Route path='/menu-items' exact render={() => <MainPage/>}/>
+                <Route path='/menu-items/:id' render={({match}) => {
+                    const {id} = match.params;
+                    return <MenuItemPage id={id}/>;
+                }}/>
                 <Route path='/cart' render={() => <CartPage/>}/>
             </Switch>
         </div>
