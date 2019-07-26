@@ -30,9 +30,13 @@ class MenuList extends Component {
             })
     }
 
+    onItemAdd = item => {
+        const {addItemToCart} = this.props;
+        addItemToCart(item);
+    };
+
     render() {
         const {menuItems, loading, error} = this.props;
-
         if (loading) {
             return <Spinner/>
         }
@@ -41,11 +45,13 @@ class MenuList extends Component {
             return <Error/>
         }
 
-        return <RenderMenuList items={menuItems}/>
+        return <RenderMenuList items={menuItems}
+                               onItemAdd={this.onItemAdd}
+        />
     }
 }
 
-const RenderMenuList = ({items}) => {
+const RenderMenuList = ({items, onItemAdd}) => {
     const icons = {
         salads,
         meat,
@@ -57,6 +63,7 @@ const RenderMenuList = ({items}) => {
         return <MenuListItem key={id}
                              menuItem={menuItem}
                              icons={icons}
+                             onItemAdd={() => onItemAdd(menuItem)}
         />
     });
 
@@ -68,11 +75,12 @@ const RenderMenuList = ({items}) => {
 };
 
 const mapStateToProps = (state) => {
-    const {menu, loading, error} = state;
+    const {menu, loading, error, items} = state;
     return {
         menuItems: menu,
         loading: loading,
-        error: error
+        error: error,
+        items: items
     }
 };
 

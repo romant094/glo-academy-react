@@ -17,8 +17,24 @@ const menuDownloadError = () => {
     }
 };
 
+const addItemToCart = (item) => {
+    return {
+        type: 'ADD_ITEM_TO_CART',
+        payload: item
+    }
+};
+
+const deleteItemFromCart = (id) => {
+    return {
+        type: 'DELETE_ITEM_FROM_CART',
+        payload: id
+    }
+};
+
 export {
     menuLoaded,
     menuRequested,
-    menuDownloadError
+    menuDownloadError,
+    deleteItemFromCart,
+    addItemToCart
 }

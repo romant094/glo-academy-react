@@ -17,7 +17,7 @@ const App = () => {
         <div style={style}
              className="app"
         >
-            <AppHeader total={50}/>
+            <AppHeader/>
             <Switch>
                 <Route path='/menu-items' exact render={() => <MainPage/>}/>
                 <Route path='/menu-items/:id' render={({match}) => {
