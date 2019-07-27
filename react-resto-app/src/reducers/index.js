@@ -35,6 +35,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 items: newItems
             };
+        case 'CLEAR_CART':
+            console.log('clear');
+            return {
+                ...state,
+                items: []
+            };
         case 'ADD_ITEM_TO_CART':
             const cartItem = {...payload, count: 1};
             const indx = newItems.findIndex(item => item.id === payload.id);

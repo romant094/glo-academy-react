@@ -31,10 +31,17 @@ const deleteItemFromCart = (id) => {
     }
 };
 
+const clearCart = () => {
+    return {
+        type: 'CLEAR_CART'
+    }
+};
+
 export {
     menuLoaded,
     menuRequested,
     menuDownloadError,
     deleteItemFromCart,
-    addItemToCart
+    addItemToCart,
+    clearCart
 }

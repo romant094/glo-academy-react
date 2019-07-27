@@ -2,12 +2,25 @@ import React from 'react';
 import './cart-table.scss';
 import {connect} from "react-redux";
 import * as actions from '../../actions';
+import WithRestoService from "../hoc";
 
-const CartTable = ({items, deleteItemFromCart}) => {
-    console.log(items);
+const CartTable = ({items, deleteItemFromCart, RestoService, clearCart}) => {
+    const cartIsEmpty = items.length === 0;
+    console.log(clearCart);
+    const makeOrder = (data) => {
+        RestoService.sendOrder(data)
+            .then(res => {
+                console.log(res);
+                clearCart();
+            })
+            .catch(err => console.log(err))
+    };
+
     return (
         <>
-            <div className="cart__title">Ваш заказ:</div>
+            <div className="cart__title">
+                {`${cartIsEmpty ? 'Your cart is empty...' : 'Your cart:'}`}
+            </div>
             <div className="cart__list">
                 {
                     items.map(item => {
@@ -33,10 +46,23 @@ const CartTable = ({items, deleteItemFromCart}) => {
                     })
                 }
             </div>
+            {
+                cartIsEmpty
+                    ? null
+                    : (
+                        <div className="cart__footer">
+                            <button className="menu__btn"
+                                    onClick={() => makeOrder(items)}
+                            >
+                                Make order
+                            </button>
+                        </div>
+                    )
+            }
         </>
     );
 };
 
 const mapStateToProps = ({items}) => ({items: items});
 
-export default connect(mapStateToProps, actions)(CartTable);
+export default WithRestoService()(connect(mapStateToProps, actions)(CartTable));
